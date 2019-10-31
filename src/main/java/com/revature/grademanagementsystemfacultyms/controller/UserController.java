@@ -24,7 +24,7 @@ public class UserController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 	
-	@PostMapping("addUser")
+	@GetMapping("addUser")
     @ApiOperation(value = "Register API")
      @ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Registered", response = User.class),
              @ApiResponse(code = 400, message = "Invalid Details", response = Message.class) })
