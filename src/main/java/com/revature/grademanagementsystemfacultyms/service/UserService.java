@@ -5,8 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import com.revature.grademanagementsystemfacultyms.configuration.MessageConstants;
+import com.revature.grademanagementsystemfacultyms.dto.MailDTO;
 import com.revature.grademanagementsystemfacultyms.exception.DBException;
 import com.revature.grademanagementsystemfacultyms.exception.ServiceException;
 import com.revature.grademanagementsystemfacultyms.model.User;
@@ -16,6 +18,10 @@ import com.revature.grademanagementsystemfacultyms.repository.UserRepository;
 public class UserService {
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private MailService mailService;
+
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
 	@Transactional
@@ -32,7 +38,12 @@ public class UserService {
 	@Transactional
 	public User insert(User user) throws ServiceException {
 		try {
+			MailDTO mailDto=new MailDTO();
 			user = userRepository.save(user);
+	
+			mailDto.setName(user.getName());
+			mailDto.setEmail(user.getEmail());
+			mailService.sendMail(mailDto);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			throw new ServiceException(MessageConstants.UNABLE_TO_INSERT);

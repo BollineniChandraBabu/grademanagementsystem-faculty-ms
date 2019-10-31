@@ -2,6 +2,6 @@
 spring:
    datasource: 
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://trainingdb.ck1ayq0lncmp.ap-south-1.rds.amazonaws.com/gradeapp_faculty_db
-      username: chandrababu
+      url: jdbc:mysql://gradeapp-prod.cwcgqfx9ijuw.ap-south-1.rds.amazonaws.com/gradeapp_faculty_db
+      username: admin
       password: chandrababu
