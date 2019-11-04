@@ -11,8 +11,10 @@ import com.revature.grademanagementsystemfacultyms.configuration.MessageConstant
 import com.revature.grademanagementsystemfacultyms.dto.MailDTO;
 import com.revature.grademanagementsystemfacultyms.exception.DBException;
 import com.revature.grademanagementsystemfacultyms.exception.ServiceException;
+import com.revature.grademanagementsystemfacultyms.exception.ValidatorException;
 import com.revature.grademanagementsystemfacultyms.model.User;
 import com.revature.grademanagementsystemfacultyms.repository.UserRepository;
+import com.revature.grademanagementsystemfacultyms.validator.FacultyValidator;
 
 @Service
 public class UserService {
@@ -20,7 +22,8 @@ public class UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private MailService mailService;
-
+	@Autowired
+	private FacultyValidator facultyValidator;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
@@ -38,13 +41,17 @@ public class UserService {
 	@Transactional
 	public User insert(User user) throws ServiceException {
 		try {
+			facultyValidator.addedEmployeeValidation(user);
+			
 			MailDTO mailDto=new MailDTO();
 			user = userRepository.save(user);
 	
 			mailDto.setName(user.getName());
 			mailDto.setEmail(user.getEmail());
 			mailService.sendMail(mailDto);
-		} catch (Exception e) {
+		} catch (ValidatorException e) {
+			throw new ServiceException(e.getMessage());
+		}catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			throw new ServiceException(MessageConstants.UNABLE_TO_INSERT);
 		}

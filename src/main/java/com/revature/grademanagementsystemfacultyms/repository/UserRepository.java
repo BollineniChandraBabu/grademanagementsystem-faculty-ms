@@ -13,4 +13,10 @@ import com.revature.grademanagementsystemfacultyms.model.User;
 public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query("from User u where email=:email and password=:password")
 	User login(@Param("email")String email,@Param("password") String password);
+
+	@Query("from User u where email= :email")
+	User findByEmail(@Param("email")String email);
+
+	@Query("from User u where mobile= :mobile")
+	User findByMobNo(@Param("mobile")Long mobile);
 }
