@@ -11,4 +11,9 @@ public class MessageConstants {
       public static final String UNABLE_TO_INSERT="Unable to add users";
       public static final String UNABLE_TO_REGISTER = "Unable to register! try again";
       public static final String INVALID_NAME_AND_PASSWORD = "Invalid email or password";
+      public static final String MOBILE_AREADY_EXIST = "Mobile number already exist";
+      public static final String MAIL_AREADY_EXIST = "Mail address already exist";
+      public static final String MAIL_HAS_BEEN_SEND = "Mail has been send";
+      public static final String MAIL_HAS_BEEN_NOT_SEND = "Mail has been not send, Please try again.";
+      public static final String DOESNOT_REGISTERED = "Mail Id does not registered.";
 }
